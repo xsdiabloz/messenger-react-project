@@ -4,11 +4,13 @@ import toast from "react-hot-toast";
 import type { ILogin, ISignUp } from "../types/types";
 import type { AxiosError } from "axios";
 
-interface IUser {
+export interface IUser {
   _id: string;
   email: string;
   fullName: string;
   profilePic?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthState {
@@ -22,6 +24,7 @@ interface AuthState {
   signup: (data: ISignUp) => Promise<void>;
   login: (data: ILogin) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: { profilePic: string }) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -80,6 +83,20 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       toast.error(axiosError.response?.data?.message || "Something went wrong");
+    }
+  },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const response = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: response.data });
+      toast.success("Profile updated succesfully");
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError.response?.data?.message || "Something went wrong");
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 }));
