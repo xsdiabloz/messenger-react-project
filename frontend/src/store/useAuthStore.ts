@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import type { ISignUp } from "../types/types";
+import type { ILogin, ISignUp } from "../types/types";
 import type { AxiosError } from "axios";
 
 interface IUser {
@@ -20,6 +20,8 @@ interface AuthState {
 
   checkAuth: () => Promise<void>;
   signup: (data: ISignUp) => Promise<void>;
+  login: (data: ILogin) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -53,6 +55,20 @@ export const useAuthStore = create<AuthState>((set) => ({
       toast.error(axiosError.response?.data?.message || "Something went wrong");
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+
+  login: async (data: ILogin) => {
+    set({ isLoggingIn: true });
+    try {
+      const response = await axiosInstance.post("/auth/login", data);
+      set({ authUser: response.data });
+      toast.success("Logged in succesfully");
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError.response?.data?.message || "Something went wrong");
+    } finally {
+      set({ isLoggingIn: false });
     }
   },
 

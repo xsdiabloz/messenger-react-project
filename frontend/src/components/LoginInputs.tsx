@@ -1,35 +1,14 @@
-import React from "react";
-import { Eye, EyeOff, Mail, User, Lock } from "lucide-react";
-import type { IInputs, ISignUp } from "../types/types";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import type { IInputs, ILogin } from "../types/types";
 
-const SignUpInputs = ({
+const LoginInputs = ({
   formData,
   setFormData,
   showPassword,
   setShowPassword,
-}: IInputs<ISignUp>) => {
+}: IInputs<ILogin>) => {
   return (
     <>
-      <div className="form-control mb-7">
-        <label className="label">
-          <span className="label-text font-medium">Full Name</span>
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-            <User className="size-5 text-base-content/40" />
-          </div>
-          <input
-            type="text"
-            className={`input input-bordered w-full pl-10`}
-            placeholder="John Doe"
-            value={formData.fullName}
-            onChange={(e) =>
-              setFormData({ ...formData, fullName: e.target.value })
-            }
-          />
-        </div>
-      </div>
-
       <div className="form-control mb-7">
         <label className="label">
           <span className="label-text font-medium">Email</span>
@@ -87,4 +66,4 @@ const SignUpInputs = ({
   );
 };
 
-export default SignUpInputs;
+export default LoginInputs;

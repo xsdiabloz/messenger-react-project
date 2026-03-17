@@ -78,7 +78,7 @@ const SignUpPage = () => {
           <div className="text-center">
             <p className="text-base-content/60">
               Already have an account?
-              <Link to="/login" className="link link-primary ml-1">
+              <Link to="/login" className="link link-primary ml-1.5">
                 Sign in
               </Link>
             </p>
