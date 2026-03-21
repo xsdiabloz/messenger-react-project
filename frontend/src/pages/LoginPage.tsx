@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import type { ILogin } from "../types/types";
-import LoginInputs from "../components/loginInputs";
 import { Loader2, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import LoginInputs from "../components/LoginInputs";
 
 const LoginPage = () => {
   const { login, isLoggingIn } = useAuthStore();
