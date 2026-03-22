@@ -11,8 +11,21 @@ import type { Request, Response } from "express";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; " +
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+      "font-src 'self' https://fonts.gstatic.com; " +
+      "img-src 'self' data: https://res.cloudinary.com; " +
+      "connect-src 'self' https://messenger-react-project.onrender.com wss://messenger-react-project.onrender.com;",
+  );
+  next();
+});
 
 app.use(
   cors({
