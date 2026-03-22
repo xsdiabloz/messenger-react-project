@@ -45,11 +45,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  const rootDir = process.cwd();
+  const frontendPath = path.resolve(process.cwd(), "..", "frontend", "dist");
 
-  const frontendPath = path.join(rootDir, "frontend", "dist");
-
-  console.log("Static files path:", frontendPath);
+  console.log("Final Static Path:", frontendPath);
 
   app.use(express.static(frontendPath));
 
